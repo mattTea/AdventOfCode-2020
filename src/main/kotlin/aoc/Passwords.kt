@@ -1,5 +1,8 @@
 package aoc
 
+fun numberValidPasswords(passwords: List<String>): Int =
+    passwords.filter { validPassword(it) }.size
+
 fun validPassword(passwordAndPolicy: String): Boolean {
     val letter = policyLetter(passwordAndPolicy)
     val instancesRequired = policyInstances(passwordAndPolicy)

@@ -50,4 +50,26 @@ class PasswordsKtTest {
 
         assertThat(result).isTrue()
     }
+
+    @Test
+    fun `should return one valid password in list of one`() {
+        val input = listOf(
+            "1-3 a: abcde",
+            "1-3 b: cdefg",
+            "2-9 c: ccccccccc"
+        )
+
+        val result = numberValidPasswords(input)
+
+        assertThat(result).isEqualTo(2)
+    }
+
+    @Test
+    fun `should return number of valid password in full input list`() {
+        val result = numberValidPasswords(passwordInput)
+
+        println("number of valid passwords: $result")
+
+        assertThat(result).isEqualTo(536)
+    }
 }
