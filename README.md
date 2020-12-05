@@ -24,7 +24,7 @@ Find the two entries that sum to 2020; what do you get if you multiply them toge
 
 ### Part 2
 
-Find the two entries that sum to 2020; what do you get if you multiply them together?
+Find the three entries that sum to 2020; what do you get if you multiply them together?
 
 ------
 
