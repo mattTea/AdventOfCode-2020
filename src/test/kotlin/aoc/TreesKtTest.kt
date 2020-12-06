@@ -21,7 +21,7 @@ class TreesKtTest {
             "...#...#"
         )
 
-        val result = makeMapCorrectWidth(input)
+        val result = makeMapCorrectWidth(input, 3.0)
 
         assertThat(result).isEqualTo(expected)
     }
@@ -35,7 +35,7 @@ class TreesKtTest {
             "..#.#...#.#."
         )
 
-        val result = encounters(input)
+        val result = encounters(input, 3.0)
 
         assertThat(result).containsExactly(".", "#", ".")
     }
@@ -56,14 +56,14 @@ class TreesKtTest {
             ".#..#...#.#.#..#...#.#.#..#...#.#.#..#...#.#.#..#...#.#.#..#...#.#"
         )
 
-        val result = treesEncountered(input)
+        val result = treesEncountered(input, 3.0)
 
         assertThat(result).isEqualTo(7)
     }
 
     @Test
     fun `should return all trees encountered for full input`() {
-        val result = treesEncountered(treeMapInput)
+        val result = treesEncountered(treeMapInput, 3.0)
 
         println(result)
 
