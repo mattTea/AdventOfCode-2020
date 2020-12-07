@@ -93,4 +93,28 @@ class SeatNumbersKtTest {
 
         assertThat(result).isEqualTo(880)
     }
+
+    // part 2 - seat number is 731
+
+    @Test
+    fun `should return list of 3 seat numbers`() {
+        val input = seatNumberInput
+
+        val result = possibleSeatNumbers(input)
+
+        println(result.sorted()) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 731]
+
+        assertThat(result.size).isEqualTo(13)
+    }
+
+    @Test
+    fun `should return single seat ID`() {
+        val input = seatNumberInput
+
+        val result = findSeatNumber(input)
+
+        println(result)
+
+        assertThat(result).isEqualTo(731)
+    }
 }

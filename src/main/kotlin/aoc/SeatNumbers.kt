@@ -1,5 +1,16 @@
 package aoc
 
+fun findSeatNumber(seatInput: List<String>): Int {
+    val possibles = possibleSeatNumbers(seatInput)
+
+    return possibles.filterNot {
+        possibles.contains(it + 1) || possibles.contains(it - 1)
+    }.single()
+}
+
+fun possibleSeatNumbers(seatInput: List<String>): List<Int> =
+    (1..880).toList() - seatInput.map { calculateSeatId(it) }.sorted()
+
 fun highestSeatId(seatInput: List<String>): Int =
     seatInput.map { calculateSeatId(it) }.maxOrNull()!!
 
