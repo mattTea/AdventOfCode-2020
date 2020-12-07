@@ -10,7 +10,24 @@ fun uniqueLetters(input: String): Int =
         .distinct()
         .size
 
-fun sumCounts(input: String): Int =
+fun sumUniqueCounts(input: String): Int =
     separateGroups(input)
         .map { uniqueLetters(it) }
+        .reduce { total, next -> total + next }
+
+// part 2
+
+fun commonLetters(input: String): Int {
+    val numberOfResponses = input.filter { it == '\n' }.length + 1
+    val list = input.replace("\n", "").toList()
+    val counts = list.filter{ it in list }.groupingBy { it }.eachCount()
+
+    return counts.filter {
+        it.value == numberOfResponses
+    }.size
+}
+
+fun sumCommonCounts(input: String): Int =
+    separateGroups(input)
+        .map { commonLetters(it) }
         .reduce { total, next -> total + next }
