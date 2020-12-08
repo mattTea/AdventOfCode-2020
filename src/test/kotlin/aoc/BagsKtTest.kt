@@ -52,4 +52,48 @@ class BagsKtTest {
 
         assertThat(result).isEqualTo(287)
     }
+
+    // part 2
+
+    @Test
+    fun `should return 0 for number of bags faded blue bags should contain`() {
+        val input = listOf("faded blue bags contain 0 other bags")
+
+        val result = bagsInside(listOf("faded blue"), input)
+
+        assertThat(result).isEqualTo(0)
+    }
+
+    @Test
+    fun `should return 3 for number of bags shiny gold bags should contain`() {
+        val input = listOf("shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags")
+
+        val result = bagsInside(listOf("shiny gold"), input)
+
+        assertThat(result).isEqualTo(3)
+    }
+
+    @Test
+    fun `should return 6 for number of bags shiny gold bags should contain`() {
+        val input = listOf(
+            "shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags",
+            "dark olive bags contain 3 faded blue bags"
+        )
+
+        val result = bagsInside(listOf("shiny gold"), input)
+
+        assertThat(result).isEqualTo(6)
+    }
+
+//    @Test
+//    fun `should return 32 for number of bags shiny gold bags should contain`() {
+//        val input = listOf(
+//            "shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags",
+//            "vibrant plum bags contain 5 faded blue bags, 6 dotted black bags"
+//        )
+//
+//        val result = bagsInside(listOf("shiny gold"), input)
+//
+//        assertThat(result).isEqualTo(25)
+//    }
 }
