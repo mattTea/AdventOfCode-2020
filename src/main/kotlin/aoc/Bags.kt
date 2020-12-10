@@ -1,5 +1,8 @@
 package aoc
 
+fun bagsNeededIn(bagColour: String, rules: List<String>): Int =
+    countBagsInTree(createTreeFrom(Pair(1, bagColour), rules))
+
 fun countBagsInTree(tree: List<Bag>): Int =
     tree.map {
         if (it.children.isNotEmpty()) {
@@ -18,10 +21,10 @@ fun createTreeFrom(startingBag: Pair<Int, String>, rules: List<String>): List<Ba
         Bag(
             number = it.first,
             colour = it.second,
-            children = if (!hasChildren(it.second, rules)) {
-                emptyList()
-            } else {
+            children = if (hasChildren(it.second, rules)) {
                 createTreeFrom(it, rules)
+            } else {
+                emptyList()
             }
         )
     }

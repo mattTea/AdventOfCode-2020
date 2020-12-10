@@ -2,20 +2,9 @@ package aoc
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import assertk.assertions.isNull
 import org.junit.jupiter.api.Test
 
 class BagsKtTest {
-    // tree structure attempt
-
-    // think a method needs to traverse all the way to the bottom of the rules first...
-    // for the 48 test above
-    // shiny gold -> 1 dark olive   -> 3 faded blue   -> 0 =                 (1) + (1*3) + (1*3*0) = 4
-    //                              -> 4 dotted black -> 1 faded blue -> 0 =       (1*4) + (1*4*1) + (1*4*1*0) = 8
-    //            -> 2 vibrant plum -> 5 faded blue   -> 0 =                 (2) + (2*5) + (2*5*0) = 12
-    //                              -> 6 dotted black -> 1 faded blue -> 0 =       (2*6) + (2*6*1) + (2*6*1*0) = 24
-    //                                                                     = 48
-
     @Test
     fun `should create tree structure from rule data`() {
         val rules = listOf(
@@ -58,6 +47,45 @@ class BagsKtTest {
         val result = countBagsInTree(tree)
 
         assertThat(result).isEqualTo(48)
+    }
+
+    @Test
+    fun `should generate tree and return 3 bags count`() {
+        val rules = listOf(
+            "shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags",
+            "dark olive bags contain no other bags",
+            "vibrant plum bags contain no other bags"
+        )
+
+        val result = bagsNeededIn("shiny gold", rules)
+
+        assertThat(result).isEqualTo(3)
+    }
+
+    @Test
+    fun `should generate tree and return 48 bags count`() {
+        val rules = listOf(
+            "shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags",
+            "faded blue bags contain no other bags",
+            "dotted black bags contain 1 faded blue bags",
+            "vibrant plum bags contain 5 faded blue bags, 6 dotted black bags",
+            "dark olive bags contain 3 faded blue bags, 4 dotted black bags"
+        )
+
+        val result = bagsNeededIn("shiny gold", rules)
+
+        assertThat(result).isEqualTo(48)
+    }
+
+    @Test
+    fun `should generate tree and return bags count for full input list`() {
+        val rules = bagRules
+
+        val result = bagsNeededIn("shiny gold", rules)
+
+        println(result)
+
+        assertThat(result).isEqualTo(48160)
     }
 }
 
