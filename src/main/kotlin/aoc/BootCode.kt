@@ -2,28 +2,44 @@ package aoc
 
 class HandheldDevice {
     var acc = 0
-    var indexesVisited = mutableListOf<Int>()
 
-    fun runProgram(instructions: List<String>, index: Int = 0): Int {
+    fun runProgram(
+        instructions: List<String>,
+        index: Int = 0,
+        indexesVisited: List<Int> = emptyList()
+    ): Int {
         return if (indexesVisited.contains(index)) {
             acc
         } else {
+            val newIndexesVisited = createIndexes(indexesVisited, index)
             when (instructions[index].take(3)) {
                 "nop" -> {
-                    indexesVisited.add(index)
-                    runProgram(instructions, index + 1)
+                    runProgram(
+                        instructions = instructions,
+                        index = index + 1,
+                        indexesVisited = newIndexesVisited
+                    )
                 }
                 "jmp" -> {
-                    indexesVisited.add(index)
-                    runProgram(instructions, index + instructions[index].substringAfter(" ").toInt())
+                    runProgram(
+                        instructions = instructions,
+                        index = index + instructions[index].substringAfter(" ").toInt(),
+                        indexesVisited = newIndexesVisited
+                    )
                 }
                 "acc" -> {
-                    indexesVisited.add(index)
                     acc += instructions[index].substringAfter(" ").toInt()
-                    runProgram(instructions, index + 1)
+                    runProgram(
+                        instructions = instructions,
+                        index = index + 1,
+                        newIndexesVisited
+                    )
                 }
                 else -> throw UnknownError("Instruction not understood")
             }
         }
     }
+
+    private fun createIndexes(startingList: List<Int> = emptyList(), additionalIndex: Int): List<Int> =
+        startingList + additionalIndex
 }
