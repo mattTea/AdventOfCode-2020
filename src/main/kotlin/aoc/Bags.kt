@@ -1,5 +1,30 @@
 package aoc
 
+fun extractContainingBagColours(bagColours: List<String>, rule: String): String? =
+    if (bagColours.map { rule.substringAfter("contain").contains(it) }.any { it }) {
+        rule.substringBefore(" bag")
+    } else {
+        null
+    }
+
+fun bagsContaining(bagColours: List<String>, rules: List<String>, count: Int = 0): Int {
+    val directlyContainingBags = rules
+        .mapNotNull { extractContainingBagColours(bagColours, it) }
+        .distinct()
+
+    val reducedRules = rules.filterNot { rule ->
+        bagColours.map { rule.substringAfter("contain").contains(it) }.any { it }
+    }
+
+    return if (directlyContainingBags.isNullOrEmpty()) {
+        count
+    } else {
+        bagsContaining(directlyContainingBags, reducedRules, directlyContainingBags.size + count)
+    }
+}
+
+// part 2
+
 fun bagsNeededIn(bagColour: String, rules: List<String>): Int =
     countBagsInTree(createTreeFrom(Pair(1, bagColour), rules))
 
