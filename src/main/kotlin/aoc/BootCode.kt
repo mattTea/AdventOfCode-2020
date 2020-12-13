@@ -64,14 +64,6 @@ private fun accumulate(startingAcc: Int, accValue: Int): Int =
 
 // part 2
 
-/*
-Change one nop to jmp or jmp to nop at a time
-if the program runs as expected in part one above that change was incorrect - revert
-
-If the program reaches the end (outOfBounds or .length + 1) return acc - this was correct
-
-*/
-
 fun fixProgram(instructions: List<String>): Int {
     val errorIndex = instructions.mapIndexedNotNull { index, _ ->
         if (checkInstruction(instructions, index)) index else null

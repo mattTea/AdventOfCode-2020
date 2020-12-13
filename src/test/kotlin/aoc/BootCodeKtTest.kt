@@ -33,6 +33,8 @@ class BootCodeKtTest {
 
         val result = runProgram(instructions)
 
+        println(result.acc)
+
         assertThat(result.acc).isEqualTo(1548)
     }
 
