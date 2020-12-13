@@ -78,4 +78,71 @@ class XmasDataKtTest {
 
         assertThat(result).isEqualTo(1398413738)
     }
+
+    // part 2
+
+    @Test
+    fun `should find contiguous list of 2 numbers that add up to 3`() {
+        val input = listOf<Long>(1,2)
+
+        val result = findContiguousValues(3, input)
+
+        assertThat(result).isEqualTo(listOf<Long>(1,2))
+    }
+
+    @Test
+    fun `should find contiguous list of 3 numbers that add up to 6`() {
+        val input = listOf<Long>(1,2,3)
+
+        val result = findContiguousValues(6, input)
+
+        assertThat(result).isEqualTo(listOf<Long>(1,2,3))
+    }
+
+    @Test
+    fun `should find contiguous list of 3 numbers that add up to 6 after increasing start index`() {
+        val input = listOf<Long>(15,1,2,3)
+
+        val result = findContiguousValues(6, input)
+
+        assertThat(result).isEqualTo(listOf<Long>(1,2,3))
+    }
+
+    @Test
+    fun `should find contiguous list of 4 numbers that add up to 127 for example input`() {
+        val input = exampleXmasData
+
+        val result = findContiguousValues(127, input)
+
+        assertThat(result).isEqualTo(listOf<Long>(15,25,47,40))
+    }
+
+    @Test
+    fun `should extract 15 and 47 as smallest and largest values in input and add together`() {
+        val input = listOf<Long>(15,25,47,40)
+
+        val result = findWeakness(input)
+
+        assertThat(result).isEqualTo(62)
+    }
+
+    @Test
+    fun `should find weakness value of 62 for example input`() {
+        val input = exampleXmasData
+
+        val result = findWeakness(findContiguousValues(127, input))
+
+        assertThat(result).isEqualTo(62)
+    }
+
+    @Test
+    fun `should find weakness value for full input`() {
+        val input = xmasData
+
+        val result = findWeakness(findContiguousValues(1398413738, input))
+
+        println(result)
+
+        assertThat(result).isEqualTo(169521051)
+    }
 }
