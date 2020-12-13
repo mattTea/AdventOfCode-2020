@@ -72,10 +72,18 @@ If the program reaches the end (outOfBounds or .length + 1) return acc - this wa
 
 */
 
+fun fixProgram(instructions: List<String>): Int {
+    val errorIndex = instructions.mapIndexedNotNull { index, _ ->
+        if (checkInstruction(instructions, index)) index else null
+    }.single()
+
+    return runProgram(createNewInstructions(errorIndex, instructions)).acc
+}
+
 fun checkInstruction(instructions: List<String>, index: Int = 0): Boolean {
     val instruction = instructions[index].take(3)
     return if (instruction == "nop" || instruction == "jmp") {
-        runProgram(createNewInstructions(index, instructions)).acc < 0
+        runProgram(createNewInstructions(index, instructions)).exitCode == "terminated"
     } else {
         false
     }

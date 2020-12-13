@@ -3,6 +3,7 @@ package aoc
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import org.junit.jupiter.api.Test
 
 class BootCodeKtTest {
@@ -60,7 +61,7 @@ class BootCodeKtTest {
     }
 
     @Test
-    fun `should loop and return acc of zero`() {
+    fun `should loop and not return terminated exitCode`() {
         val instructions = exampleBootCode
         val index = 0
 
@@ -69,10 +70,15 @@ class BootCodeKtTest {
         assertThat(result).isFalse()
     }
 
-    /*
-    runProgram needs to return a Pair<Int, String> for acc and exitCode
-    - i.e. Pair(4, "terminated") or Pair(45, "loop")
-    */
+    @Test
+    fun `should return terminated exitCode`() {
+        val instructions = exampleBootCode
+        val index = 7
+
+        val result = checkInstruction(instructions, index)
+
+        assertThat(result).isTrue()
+    }
 
     @Test
     fun `should return acc of 5 and exit code of loop from program`() {
@@ -100,5 +106,25 @@ class BootCodeKtTest {
         val result = runProgram(instructions)
 
         assertThat(result).isEqualTo(Output(8, "terminated"))
+    }
+
+    @Test
+    fun `should fix program instructions and return acc of 8`() {
+        val instructions = exampleBootCode
+
+        val result = fixProgram(instructions)
+
+        assertThat(result).isEqualTo(8)
+    }
+
+    @Test
+    fun `should fix program instructions and return acc for full input`() {
+        val instructions = bootCode
+
+        val result = fixProgram(instructions)
+
+        println(result)
+
+        assertThat(result).isEqualTo(1375)
     }
 }
