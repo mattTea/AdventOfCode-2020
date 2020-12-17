@@ -1,6 +1,6 @@
 package aoc
 
-val exampleAdapterRatings1 = listOf( // 7 differences of 1 jolt and 5 differences of 3 jolts
+val exampleAdapterRatings1 = listOf(
     16,
     10,
     15,
@@ -12,9 +12,13 @@ val exampleAdapterRatings1 = listOf( // 7 differences of 1 jolt and 5 difference
     6,
     12,
     4
+
+    // 11 length (+2)
+    // 7 differences of 1 jolt and 5 differences of 3 jolts
+    // 8 arrangements
 )
 
-val exampleAdapterRatings2 = listOf( // 22 differences of 1 jolt and 10 differences of 3 jolts
+val exampleAdapterRatings2 = listOf(
     28,
     33,
     18,
@@ -46,6 +50,10 @@ val exampleAdapterRatings2 = listOf( // 22 differences of 1 jolt and 10 differen
     34,
     10,
     3
+
+    // 31 length (+2)
+    // 22 differences of 1 jolt and 10 differences of 3 jolts
+    // 19208 arrangements
 )
 
 val adapterRatings = listOf(

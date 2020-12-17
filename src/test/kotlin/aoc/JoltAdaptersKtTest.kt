@@ -25,7 +25,7 @@ class JoltAdaptersKtTest {
         val result = ratingJumps(input)
 
         assertThat(result).containsOnly(
-            Pair(22, 1),
+            Pair(22, 1), // 31 length
             Pair(10, 3)
         )
     }
@@ -57,5 +57,36 @@ class JoltAdaptersKtTest {
         println(result)
 
         assertThat(result).isEqualTo(2346)
+    }
+
+    // part 2
+
+    @Test
+    fun `should calculate 8 paths`() {
+        val input = exampleAdapterRatings1
+
+        val result = getPaths(input)
+
+        assertThat(result).isEqualTo(8)
+    }
+
+    @Test
+    fun `should calculate 19208 paths`() {
+        val input = exampleAdapterRatings2
+
+        val result = getPaths(input)
+
+        assertThat(result).isEqualTo(19208)
+    }
+
+    @Test
+    fun `should calculate paths for full input`() {
+        val input = adapterRatings
+
+        val result = getPaths(input)
+
+        println(result)
+
+        assertThat(result).isEqualTo(6044831973376)
     }
 }
