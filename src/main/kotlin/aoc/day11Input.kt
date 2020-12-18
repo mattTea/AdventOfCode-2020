@@ -13,6 +13,45 @@ val exampleSeatLayout = listOf(
     "L.LLLLL.LL"
 )
 
+val exampleSeatLayoutChangeAfterOneRound = listOf(
+    "#.##.##.##",
+    "#######.##",
+    "#.#.#..#..",
+    "####.##.##",
+    "#.##.##.##",
+    "#.#####.##",
+    "..#.#.....",
+    "##########",
+    "#.######.#",
+    "#.#####.##"
+)
+
+val exampleSeatLayoutChangeAfterTwoRounds = listOf(
+    "#.LL.L#.##",
+    "#LLLLLL.L#",
+    "L.L.L..L..",
+    "#LLL.LL.L#",
+    "#.LL.LL.LL",
+    "#.LLLL#.##",
+    "..L.L.....",
+    "#LLLLLLLL#",
+    "#.LLLLLL.L",
+    "#.#LLLL.##"
+)
+
+val exampleSeatLayoutAfterBecomingStatic = listOf(
+    "#.#L.L#.##",
+    "#LLL#LL.L#",
+    "L.#.L..#..",
+    "#L##.##.L#",
+    "#.#L.LL.LL",
+    "#.#L#L#.##",
+    "..L.L.....",
+    "#L#L##L#L#",
+    "#.LLLLLL.L",
+    "#.#L#L#.##",
+)
+
 val seatLayout = listOf(
     "LLLLL.LLLLLLLLLLLLLLLLL.LLLLLL.LLLLL.L.LLLLLL.LLLLLL.LLL.LLLLLLLL.LLLLL.L.LLLLLLLLLLLLLLLL.LLLLLLL",
     "LLLLL.LLLLLLLLLLL.LLLLLLLLLLLLLLLLLL.LLLLLLLLL.LLLLL.LLL.LLLLLLLLLLLLL.L.LLLLLLLLLL.LLLLLL.LLLLLLL",
