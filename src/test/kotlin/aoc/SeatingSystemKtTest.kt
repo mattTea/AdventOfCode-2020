@@ -1,7 +1,9 @@
 package aoc
 
 import assertk.assertThat
+import assertk.assertions.containsOnly
 import assertk.assertions.isEqualTo
+import assertk.assertions.isNull
 import org.junit.jupiter.api.Test
 
 class SeatingSystemKtTest {
@@ -156,14 +158,137 @@ class SeatingSystemKtTest {
         assertThat(result).isEqualTo(37)
     }
 
+//    @Test
+//    fun `should return count of occupied seats from full input`() {
+//        val seatingPlan = seatLayout
+//
+//        val result = countOccupiedSeats(seatingPlan)
+//
+//        println(result)
+//
+//        assertThat(result).isEqualTo(2303)
+//    }
+
+    // part 2
+
     @Test
-    fun `should return count of occupied seats from full input`() {
+    fun `should return seat coordinates for nearest seat`() {
+        val seatingPlan = listOf(
+            "LLL",
+            "LL.",
+            "LLL"
+        )
+
+        val seatCoordinates = Coordinate(2,2)
+        val emptySpaceCoordinates = Coordinate(1,2)
+
+        val result = getNearestSeat(
+            seatCoordinates,
+            emptySpaceCoordinates,
+            seatingPlan
+        )
+
+        assertThat(result).isEqualTo(Coordinate(0,2))
+    }
+
+    @Test
+    fun `should return seat coordinates for nearest seat after 2 empty locations`() {
+        val seatingPlan = listOf(
+            "LLLL",
+            "LLL.",
+            "LLL.",
+            "LLLL"
+        )
+
+        val seatCoordinates = Coordinate(3,3)
+        val emptySpaceCoordinates = Coordinate(2,3)
+
+        val result = getNearestSeat(
+            seatCoordinates,
+            emptySpaceCoordinates,
+            seatingPlan
+        )
+
+        assertThat(result).isEqualTo(Coordinate(0,3))
+    }
+
+    @Test
+    fun `should return no seat coordinates when all locations in direction are floor`() {
+        val seatingPlan = listOf(
+            "LL.",
+            "LL.",
+            "LLL"
+        )
+
+        val seatCoordinates = Coordinate(2,2)
+        val emptySpaceCoordinates = Coordinate(1,2)
+
+        val result = getNearestSeat(
+            seatCoordinates,
+            emptySpaceCoordinates,
+            seatingPlan
+        )
+
+        assertThat(result).isNull()
+    }
+
+    @Test
+    fun `should return seat coordinates for nearest seat after 2 diagonal empty locations`() {
+        val seatingPlan = listOf(
+            "LLLL",
+            "L.LL",
+            "LL.L",
+            "LLLL"
+        )
+
+        val seatCoordinates = Coordinate(3,3)
+        val emptySpaceCoordinates = Coordinate(2,2)
+
+        val result = getNearestSeat(
+            seatCoordinates,
+            emptySpaceCoordinates,
+            seatingPlan
+        )
+
+        assertThat(result).isEqualTo(Coordinate(0,0))
+    }
+
+    @Test
+    fun `should return adjacent visible seats with one a row further away`() {
+        val seatingPlan = listOf(
+            "LLL",
+            "LL.",
+            "LLL"
+        )
+
+        val seatCoordinates = Coordinate(2,2)
+
+        val result = part2AdjacentSeats(seatCoordinates, seatingPlan)
+
+        assertThat(result).containsOnly(
+            SeatDetails('L', Coordinate(0,2)),
+            SeatDetails('L', Coordinate(1,1)),
+            SeatDetails('L', Coordinate(2,1))
+        )
+    }
+
+    @Test
+    fun `should return 26 occupied seats from example input`() {
+        val seatingPlan = exampleSeatLayout
+
+        val result = countOccupiedSeats(seatingPlan)
+
+        assertThat(result).isEqualTo(26)
+    }
+
+    @Test
+    fun `should return count of occupied seats from full input for part 2`() {
         val seatingPlan = seatLayout
 
         val result = countOccupiedSeats(seatingPlan)
 
         println(result)
 
-        assertThat(result).isEqualTo(2303)
+        assertThat(result).isEqualTo(2057)
     }
 }
