@@ -18,17 +18,12 @@ fun rotateSeating(seatingPlan: List<String>): List<String> {
     }
 }
 
-fun musicalChairs(seatingPlan: List<String>): List<String> {
-    val separateSeats = seatingPlan.map {
-        it.split("").filter { it.isNotEmpty() }
-    }
-
-    return separateSeats.mapIndexed { rowIndex, row ->
+fun musicalChairs(seatingPlan: List<String>): List<String> =
+    seatingPlan.mapIndexed { rowIndex, row ->
         row.mapIndexed { columnIndex, seat ->
-            checkSeat(SeatDetails(seat.single(), Coordinate(rowIndex, columnIndex)), seatingPlan)
+            checkSeat(SeatDetails(seat, Coordinate(rowIndex, columnIndex)), seatingPlan)
         }.joinToString("")
     }
-}
 
 fun checkSeat(
     seatDetails: SeatDetails,
@@ -47,20 +42,16 @@ fun adjacentSeats(
     seatCoordinates: Coordinate,
     seatingPlan: List<String>
 ): List<SeatDetails> {
-    val separateSeats = seatingPlan.map {
-        it.split("").filter { it.isNotEmpty() }
-    }
-
     val adjacentSeats = mutableListOf<SeatDetails>()
 
-    separateSeats.mapIndexed { rowIndex, row ->
+    seatingPlan.mapIndexed { rowIndex, row ->
         row.mapIndexed { columnIndex, seat ->
             val seatRow = seatCoordinates.first
             val seatCol = seatCoordinates.second
 
             when {
                 rowIndex in seatRow-1..seatRow+1 && columnIndex in seatCol-1..seatCol+1 ->
-                    adjacentSeats.add(Pair(seat.single(), Coordinate(rowIndex, columnIndex)))
+                    adjacentSeats.add(Pair(seat, Coordinate(rowIndex, columnIndex)))
                 else -> null
             }
         }
