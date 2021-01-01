@@ -43,6 +43,29 @@ fun Long.toBinary(): String =
 
 // Part 2
 
+fun storeDockingInputInMultipleAddresses(
+    dockingInput: List<String>
+): Long {
+    val memory = mutableMapOf<Long, Long>()
+    var bitMask = "000000000000000000000000000000000000"
+
+    dockingInput.map {
+        if (it.take(4) == "mask") {
+            bitMask = it.substringAfter("= ")
+        } else {
+            val dockingValue = it.substringAfter("] = ").toLong()
+            val unmaskedAddress = it.drop(4).substringBefore("]").toLong()
+            val memoryLocations = memoryBitMask(unmaskedAddress.toBinary(), bitMask)
+
+            memoryLocations.map { location ->
+                memory.put(location, dockingValue)
+            }
+        }
+    }
+
+    return memory.values.reduce { total, next -> total + next }
+}
+
 fun memoryBitMask(memoryAddress: String, memoryBitMask: String): List<Long> {
     val maskedAddress = memoryBitMask.mapIndexed { index, bit ->
         when (bit) {

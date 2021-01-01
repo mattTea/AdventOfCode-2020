@@ -7,6 +7,13 @@ val exampleDockingInput = listOf(
     "mem[8] = 0"
 )
 
+val secondExampleDockingInput = listOf(
+    "mask = 000000000000000000000000000000X1001X",
+    "mem[42] = 100",
+    "mask = 00000000000000000000000000000000X0XX",
+    "mem[26] = 1"
+)
+
 val dockingInput = listOf(
     "mask = 0XX1XXX1101X101100101001010X1X110000",
     "mem[41476] = 14032",

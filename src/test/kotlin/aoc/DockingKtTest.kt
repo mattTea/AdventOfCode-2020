@@ -114,5 +114,24 @@ class DockingKtTest {
 
         assertThat(result).isEqualTo(expected)
     }
+
+    @Test
+    fun `should store decimal values summing 208 in memory`() {
+        val input = secondExampleDockingInput
+
+        val result = storeDockingInputInMultipleAddresses(input)
+
+        assertThat(result).isEqualTo(208)
+    }
+
+    @Test
+    fun `should determine sum of all values in full input for part 2`() {
+        val input = dockingInput
+
+        val result = storeDockingInputInMultipleAddresses(input)
+        println(result)
+
+        assertThat(result).isEqualTo(3435342392262)
+    }
 }
 
