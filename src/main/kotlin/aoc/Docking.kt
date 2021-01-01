@@ -40,8 +40,39 @@ fun String.toDecimal(): Long =
 fun Long.toBinary(): String =
     this.toString(2).padStart(36, '0')
 
-fun main() {
-    println(
-        "000100011010101100101001010011110000".toDecimal()
-    )
+
+// Part 2
+
+fun memoryBitMask(memoryAddress: String, memoryBitMask: String): List<Long> {
+    val maskedAddress = memoryBitMask.mapIndexed { index, bit ->
+        when (bit) {
+            '1' -> '1'
+            'X' -> 'X'
+            else -> memoryAddress[index]
+        }
+    }.joinToString("")
+
+    return explodeFloatingBits(maskedAddress).map { it.toDecimal() }
 }
+
+fun explodeFloatingBits(
+    maskedAddress: String,
+    newAddresses: List<String> = emptyList()
+): List<String> =
+    if (newAddresses.isNotEmpty() && newAddresses.none { it.contains('X') }) {
+        newAddresses
+    } else {
+        if (newAddresses.isEmpty()) {
+            val zero = maskedAddress.replaceFirst('X', '0')
+            val one = maskedAddress.replaceFirst('X', '1')
+            explodeFloatingBits(maskedAddress, listOf(zero, one))
+        } else {
+            val explodedAddresses = mutableListOf<String>()
+            newAddresses.map {
+                val zero = it.replaceFirst('X', '0')
+                val one = it.replaceFirst('X', '1')
+                explodedAddresses.addAll(listOf(zero, one))
+            }
+            explodeFloatingBits(maskedAddress, explodedAddresses)
+        }
+    }
