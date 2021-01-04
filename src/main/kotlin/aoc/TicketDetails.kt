@@ -1,8 +1,8 @@
 package aoc
 
-fun invalidValues(validation: List<String>, tickets: List<String>): Int {
-//    val validation = input.substringBefore("\n\n").split("\n")
-//    val tickets = input.substringAfter("nearby tickets:\n").split("\n")
+fun invalidValues(input: String): Int {
+    val validation = input.substringBefore("\n\n").split("\n")
+    val tickets = input.substringAfter("nearby tickets:\n").split("\n")
 
     val fieldsWithValidation = fieldsAndRanges(validation)
 
