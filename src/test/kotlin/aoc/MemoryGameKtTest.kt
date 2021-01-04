@@ -59,4 +59,25 @@ class MemoryGameKtTest {
 
         assertThat(result).isEqualTo(319)
     }
+
+    // Part 2
+
+    @Test
+    fun `should return age after 30000000 turns for 1st example`() {
+        val startingStore = exampleLastSpokenStore
+
+        val result = lastSpoken(30000000, startingStore, 4)
+
+        assertThat(result).isEqualTo(175594)
+    }
+
+    @Test
+    fun `should determine 30000000th turn for full puzzle input`() {
+        val startingStore = fullLastSpokenStore
+
+        val result = lastSpoken(30000000, startingStore, 7)
+        println(result)
+
+        assertThat(result).isEqualTo(2424)
+    }
 }
