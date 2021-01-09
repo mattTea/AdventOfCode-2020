@@ -14,15 +14,16 @@ val initialState = listOf(
 )
 
 typealias CubeCoord = Triple<Int, Int, Int> // first = zPlane, second = row, third = column
-typealias Neighbour = Pair<Char, CubeCoord>  // char is status (active = # | inactive = .)
+typealias Cube = Pair<Char, CubeCoord>  // char is status (active = # | inactive = .)
 
 //fun cycleState(input: List<List<String>>): Int {
-//    val inputCoords = getInputCoords(input)
+//    val inputCoords = getInputCoords(input) // <- should be Cubes with value!
 //
 //    inputCoords.map { cubeCoord ->
 //        val neighbours = getNeighboursWithState(cubeCoord, input, inputCoords)
 //        val status = input[cubeCoord.first][cubeCoord.second][cubeCoord.third]
 //        val numberOfActiveNeighbours = neighbours.map { it.first }.filter { it == '#' }.size
+//
 //        when {
 //            status == '#' && numberOfActiveNeighbours == 2 || numberOfActiveNeighbours == 3 -> 0
 //            else -> 1
@@ -32,14 +33,26 @@ typealias Neighbour = Pair<Char, CubeCoord>  // char is status (active = # | ina
 //    return 0
 //}
 
+fun manageCubeState(cube: Cube, input: List<List<String>>): Cube {
+    val neighbours = getNeighboursWithState(cube, input)
+    val status = cube.first
+    val activeNeighbours = neighbours.map { it.first }.filter { it == '#' }.size
+
+    return when {
+        status == '#' && activeNeighbours == 2 || activeNeighbours == 3 -> Cube('#', cube.second)
+        status == '.' && activeNeighbours == 3 -> Cube('#', cube.second)
+        else -> Cube('.', cube.second)
+    }
+}
+
 fun getNeighboursWithState(
-    cube: CubeCoord,
+    cube: Cube,
     input: List<List<String>>,
-    inputCoords: List<CubeCoord> = getInputCoords(input)
-): List<Neighbour> {
-    val zRange = cube.first - 1..cube.first + 1
-    val rowRange = cube.second - 1..cube.second + 1
-    val colRange = cube.third - 1..cube.third + 1
+    inputCubes: List<Cube> = getInputCubes(input)
+): List<Cube> {
+    val zRange = cube.second.first - 1..cube.second.first + 1
+    val rowRange = cube.second.second - 1..cube.second.second + 1
+    val colRange = cube.second.third - 1..cube.second.third + 1
 
     val neighbourCoords = zRange.flatMap { zCoord ->
         rowRange.flatMap { rowCoord ->
@@ -47,20 +60,20 @@ fun getNeighboursWithState(
                 CubeCoord(zCoord, rowCoord, colCoord)
             }
         }
-    }.filterNot { it == cube }
+    }.filterNot { it == cube.second }
 
-    return neighbourCoords.map {
-        if (inputCoords.contains(it)) {
-            Neighbour(input[it.first][it.second][it.third], it)
-        } else Neighbour('.', it)
+    return neighbourCoords.map { cubeCoord ->
+        if (inputCubes.map { it.second }.contains(cubeCoord)) {
+            inputCubes.single { it.second == cubeCoord }
+        } else Cube('.', cubeCoord)
     }
 }
 
-private fun getInputCoords(input: List<List<String>>): List<CubeCoord> =
+private fun getInputCubes(input: List<List<String>>): List<Cube> =
     input.flatMapIndexed { zIndex, zPlane ->
         zPlane.flatMapIndexed { rowIndex, row ->
             row.mapIndexed { colIndex, _ ->
-                CubeCoord(zIndex, rowIndex, colIndex)
+                Cube(input[zIndex][rowIndex][colIndex], CubeCoord(zIndex, rowIndex, colIndex))
             }
         }
     }

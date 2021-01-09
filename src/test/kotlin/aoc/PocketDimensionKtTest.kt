@@ -15,46 +15,71 @@ class PocketDimensionKtTest {
                 "###"  // (0,2,0), (0,2,1), (0,2,2) - all outside of neighbouring cubes, so not returned
             )
         )
-        val cube = CubeCoord(0, 0, 1)
+
+        val cube = Cube('#', CubeCoord(0, 0, 1))
 
         val result = getNeighboursWithState(cube, input)
 
         assertThat(result).containsOnly(
-            Neighbour('.', CubeCoord(-1, -1, 0)),
-            Neighbour('.', CubeCoord(-1, -1, 1)),
-            Neighbour('.', CubeCoord(-1, -1, 2)),
-            Neighbour('.', CubeCoord(-1, 0, 0)),
-            Neighbour('.', CubeCoord(-1, 0, 1)),
-            Neighbour('.', CubeCoord(-1, 0, 2)),
-            Neighbour('.', CubeCoord(-1, 1, 0)),
-            Neighbour('.', CubeCoord(-1, 1, 1)),
-            Neighbour('.', CubeCoord(-1, 1, 2)),
-            Neighbour('.', CubeCoord(0, -1, 0)),
-            Neighbour('.', CubeCoord(0, -1, 1)),
-            Neighbour('.', CubeCoord(0, -1, 2)),
-            Neighbour('.', CubeCoord(0, 0, 0)),
-            Neighbour('.', CubeCoord(0, 0, 2)),
-            Neighbour('.', CubeCoord(0, 1, 0)),
-            Neighbour('.', CubeCoord(0, 1, 1)),
-            Neighbour('#', CubeCoord(0, 1, 2)),
-            Neighbour('.', CubeCoord(1, -1, 0)),
-            Neighbour('.', CubeCoord(1, -1, 1)),
-            Neighbour('.', CubeCoord(1, -1, 2)),
-            Neighbour('.', CubeCoord(1, 0, 0)),
-            Neighbour('.', CubeCoord(1, 0, 1)),
-            Neighbour('.', CubeCoord(1, 0, 2)),
-            Neighbour('.', CubeCoord(1, 1, 0)),
-            Neighbour('.', CubeCoord(1, 1, 1)),
-            Neighbour('.', CubeCoord(1, 1, 2))
+            Cube('.', CubeCoord(-1, -1, 0)),
+            Cube('.', CubeCoord(-1, -1, 1)),
+            Cube('.', CubeCoord(-1, -1, 2)),
+            Cube('.', CubeCoord(-1, 0, 0)),
+            Cube('.', CubeCoord(-1, 0, 1)),
+            Cube('.', CubeCoord(-1, 0, 2)),
+            Cube('.', CubeCoord(-1, 1, 0)),
+            Cube('.', CubeCoord(-1, 1, 1)),
+            Cube('.', CubeCoord(-1, 1, 2)),
+            Cube('.', CubeCoord(0, -1, 0)),
+            Cube('.', CubeCoord(0, -1, 1)),
+            Cube('.', CubeCoord(0, -1, 2)),
+            Cube('.', CubeCoord(0, 0, 0)),
+            Cube('.', CubeCoord(0, 0, 2)),
+            Cube('.', CubeCoord(0, 1, 0)),
+            Cube('.', CubeCoord(0, 1, 1)),
+            Cube('#', CubeCoord(0, 1, 2)),
+            Cube('.', CubeCoord(1, -1, 0)),
+            Cube('.', CubeCoord(1, -1, 1)),
+            Cube('.', CubeCoord(1, -1, 2)),
+            Cube('.', CubeCoord(1, 0, 0)),
+            Cube('.', CubeCoord(1, 0, 1)),
+            Cube('.', CubeCoord(1, 0, 2)),
+            Cube('.', CubeCoord(1, 1, 0)),
+            Cube('.', CubeCoord(1, 1, 1)),
+            Cube('.', CubeCoord(1, 1, 2))
         )
     }
+
+    @Test
+    fun `should change cube state from active to inactive`() {
+        val cube = Cube('#', CubeCoord(0,0,1))
+
+        val input = listOf(
+            listOf(
+                ".#.", // (0,0,1) - self, so not a neighbour
+                "..#", // (0,1,2)
+                "###"  // (0,2,0), (0,2,1), (0,2,2) - all outside of neighbouring cubes, so not returned
+            )
+        )
+
+        val result = manageCubeState(cube, input)
+        val expected = Cube('.', CubeCoord(0,0,1))
+
+        assertThat(result).isEqualTo(expected)
+    }
+
+    // FOR TOMORROW **still only working on a 2D input**
+
+
 
 //    @Test
 //    fun `should return 11 active cubes after single state cycle`() {
 //        val input = listOf(
-//            listOf(".#."),
-//            listOf("..#"),
-//            listOf("###")
+//            listOf(
+//                ".#.",
+//                "..#",
+//                "###"
+//            )
 //        )
 //
 //        val result = cycleState(input)
