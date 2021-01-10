@@ -16,22 +16,16 @@ val initialState = listOf(
 typealias CubeCoord = Triple<Int, Int, Int> // first = zPlane, second = row, third = column
 typealias Cube = Pair<Char, CubeCoord>  // char is status (active = # | inactive = .)
 
-//fun cycleState(input: List<List<String>>): Int {
-//    val inputCoords = getInputCoords(input) // <- should be Cubes with value!
-//
-//    inputCoords.map { cubeCoord ->
-//        val neighbours = getNeighboursWithState(cubeCoord, input, inputCoords)
-//        val status = input[cubeCoord.first][cubeCoord.second][cubeCoord.third]
-//        val numberOfActiveNeighbours = neighbours.map { it.first }.filter { it == '#' }.size
-//
-//        when {
-//            status == '#' && numberOfActiveNeighbours == 2 || numberOfActiveNeighbours == 3 -> 0
-//            else -> 1
-//        }
-//    }
-//
-//    return 0
-//}
+fun cycleState(input: List<List<String>>): Int {
+    val allInputCubes = getInputCubes(input)
+    val allNeighbourCubes = allInputCubes.flatMap {
+        getNeighboursWithState(it, input)
+    }.distinct()
+
+    return allNeighbourCubes.map {
+        manageCubeState(it, input)
+    }.filter { it.first == '#' }.size
+}
 
 fun manageCubeState(cube: Cube, input: List<List<String>>): Cube {
     val neighbours = getNeighboursWithState(cube, input)

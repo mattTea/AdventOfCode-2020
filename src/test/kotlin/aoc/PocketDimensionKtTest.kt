@@ -68,12 +68,23 @@ class PocketDimensionKtTest {
         assertThat(result).isEqualTo(expected)
     }
 
-    // FOR TOMORROW **still only working on a 2D input**
+    @Test
+    fun `should return 11 active cubes after single state cycle`() {
+        val input = listOf(
+            listOf(
+                ".#.",
+                "..#",
+                "###"
+            )
+        )
 
+        val result = cycleState(input)
 
+        assertThat(result).isEqualTo(11)
+    }
 
 //    @Test
-//    fun `should return 11 active cubes after single state cycle`() {
+//    fun `should return 112 active cubes after six state cycles`() {
 //        val input = listOf(
 //            listOf(
 //                ".#.",
@@ -84,6 +95,6 @@ class PocketDimensionKtTest {
 //
 //        val result = cycleState(input)
 //
-//        assertThat(result).isEqualTo(11)
+//        assertThat(result).isEqualTo(112)
 //    }
 }
