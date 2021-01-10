@@ -14,21 +14,27 @@ val initialState = listOf(
 )
 
 typealias CubeCoord = Triple<Int, Int, Int> // first = zPlane, second = row, third = column
-typealias Cube = Pair<Char, CubeCoord>  // char is status (active = # | inactive = .)
+typealias Cube = Pair<Char, CubeCoord>  // char is status (active = '#' | inactive = '.')
 
-fun cycleState(input: List<List<String>>): Int {
-    val allInputCubes = getInputCubes(input)
-    val allNeighbourCubes = allInputCubes.flatMap {
-        getNeighboursWithState(it, input)
-    }.distinct()
+fun cycleState(input: List<List<String>>, cycles: Int = 6): Int {
+    var cycleInputCubes = getInputCubes(input)
+    var allNeighbourCubes: List<Cube>
 
-    return allNeighbourCubes.map {
-        manageCubeState(it, input)
-    }.filter { it.first == '#' }.size
+    for (cycle in 1..cycles) {
+        allNeighbourCubes = cycleInputCubes.flatMap {
+            getNeighboursWithState(it, input, cycleInputCubes) // input is only her for a default arg
+        }.distinct()
+
+        cycleInputCubes = allNeighbourCubes.map {
+            manageCubeState(it, input, cycleInputCubes) // input is only her for a default arg
+        }
+    }
+
+    return cycleInputCubes.filter { it.first == '#' }.size
 }
 
-fun manageCubeState(cube: Cube, input: List<List<String>>): Cube {
-    val neighbours = getNeighboursWithState(cube, input)
+fun manageCubeState(cube: Cube, input: List<List<String>>, inputCubes: List<Cube> = getInputCubes(input)): Cube {
+    val neighbours = getNeighboursWithState(cube, input, inputCubes)
     val status = cube.first
     val activeNeighbours = neighbours.map { it.first }.filter { it == '#' }.size
 
