@@ -8,11 +8,10 @@ fun calculateExpressionWithBraces(input: String): Int {
 
     return if (openingBraceIndex == null || closingBraceIndex == null) {
         newOrder(trimmedInput)
-    }
-    else {
+    } else {
         val expressionInBraces = trimmedInput.substring(openingBraceIndex + 1 until closingBraceIndex)
         val newOrderValue = newOrder(expressionInBraces)
-        val newInput = trimmedInput.replaceRange(openingBraceIndex, closingBraceIndex +1, newOrderValue.toString())
+        val newInput = trimmedInput.replaceRange(openingBraceIndex, closingBraceIndex + 1, newOrderValue.toString())
         calculateExpressionWithBraces(newInput)
     }
 }
@@ -37,11 +36,13 @@ fun newOrder(homeworkLine: String): Int {
             when (element) {
                 "+" -> {
                     sumBuilder += splitLine[1] as Int
-                    splitLine.removeAll(listOf(splitLine[0],splitLine[1]))
+                    splitLine.removeAt(0)
+                    splitLine.removeAt(0)
                 }
                 "*" -> {
                     sumBuilder *= splitLine[1] as Int
-                    splitLine.removeAll(listOf(splitLine[0],splitLine[1]))
+                    splitLine.removeAt(0)
+                    splitLine.removeAt(0)
                 }
             }
         }
