@@ -5,11 +5,8 @@ fun newOrder(homeworkLine: String): Int {
     val splitLine = homeworkLine
         .filterNot { it == ' ' }
         .split(regex)
-        .map {
-            if (Regex("[0-9]*").matches(it)) it.toInt() else {
-                it
-            }
-        }.toMutableList()
+        .map { if (Regex("[0-9]*").matches(it)) it.toInt() else it }
+        .toMutableList() // listOf(1,"+",2,"*",3)
 
     var sumBuilder = 0
 
@@ -19,20 +16,15 @@ fun newOrder(homeworkLine: String): Int {
         if (element is Int) {
             sumBuilder += element
             splitLine.remove(element)
-            println("sumBuilder: $sumBuilder | inputLength: ${splitLine.size}")
         } else {
             when (element) {
                 "+" -> {
                     sumBuilder += splitLine[1] as Int
-                    splitLine.removeAt(0)
-                    splitLine.removeAt(0)
-                    println("sumBuilder: $sumBuilder | inputLength: ${splitLine.size}")
+                    splitLine.removeAll(listOf(splitLine[0],splitLine[1]))
                 }
                 "*" -> {
                     sumBuilder *= splitLine[1] as Int
-                    splitLine.removeAt(0)
-                    splitLine.removeAt(0)
-                    println("sumBuilder: $sumBuilder | inputLength: ${splitLine.size}")
+                    splitLine.removeAll(listOf(splitLine[0],splitLine[1]))
                 }
             }
         }
@@ -40,10 +32,3 @@ fun newOrder(homeworkLine: String): Int {
 
     return sumBuilder
 }
-
-
-
-
-
-
-
