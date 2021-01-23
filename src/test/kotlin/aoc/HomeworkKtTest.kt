@@ -16,10 +16,19 @@ class HomeworkKtTest {
 
     @Test
     fun `should calculate expression between braces`() {
-        val input = "1+(2*3)"
+        val input = "1 + (2 * 3)"
 
-        val result = calculateExpressionInBraces(input)
+        val result = calculateExpressionWithBraces(input)
 
-        assertThat(result).isEqualTo(6)
+        assertThat(result).isEqualTo(7)
+    }
+
+    @Test
+    fun `should return left to right operator precedence for 3 values using higher wrapper function`() {
+        val input = "1 + 2 * 3"
+
+        val result = calculateExpressionWithBraces(input)
+
+        assertThat(result).isEqualTo(9)
     }
 }

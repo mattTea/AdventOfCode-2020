@@ -1,14 +1,20 @@
 package aoc
 
 
-fun calculateExpressionInBraces(input: String): Int {
-    val closingBraceIndex = input.withIndex().find { it.value == ')' }?.index
-    val openingBraceIndex = input.substringBefore(')').withIndex().findLast { it.value == '(' }?.index
+fun calculateExpressionWithBraces(input: String): Int {
+    val trimmedInput = input.filterNot { it == ' ' }
+    val closingBraceIndex = trimmedInput.withIndex().find { it.value == ')' }?.index
+    val openingBraceIndex = trimmedInput.substringBefore(')').withIndex().findLast { it.value == '(' }?.index
 
-    val expressionInBraces = if (openingBraceIndex == null || closingBraceIndex == null) input
-    else input.substring(openingBraceIndex + 1 until closingBraceIndex)
-
-    return newOrder(expressionInBraces)
+    return if (openingBraceIndex == null || closingBraceIndex == null) {
+        newOrder(trimmedInput)
+    }
+    else {
+        val expressionInBraces = trimmedInput.substring(openingBraceIndex + 1 until closingBraceIndex)
+        val newOrderValue = newOrder(expressionInBraces)
+        val newInput = trimmedInput.replaceRange(openingBraceIndex, closingBraceIndex +1, newOrderValue.toString())
+        calculateExpressionWithBraces(newInput)
+    }
 }
 
 fun newOrder(homeworkLine: String): Int {
@@ -43,17 +49,3 @@ fun newOrder(homeworkLine: String): Int {
 
     return sumBuilder
 }
-
-fun main() {
-    val input = "1+(2*3)"
-    val input2 = "(4 * (3 * 2 + 2) * (9 * 7 * 5 * 4 * 9) * (7 * 7 + 7 * 4 + 9)) + 6 * 4 + 8 + ((6 * 5) * 4 * (2 * 8 + 4 + 7 * 9 + 3) * 2 + 6) + 3"
-
-}
-
-/*
-"(4 * (3 * 2 + 2) * (9 * 7 * 5 * 4 * 9) * (7 * 7 + 7 * 4 + 9))"
-"o1 .o2. . . . .c2.o3. . . . . . . . .c3.o4. . . . . . . . .c4c1
-
-find first ')' then work back and find last '(' before the first ')' split between then and run newOrder() on that section in the string
-
-*/
