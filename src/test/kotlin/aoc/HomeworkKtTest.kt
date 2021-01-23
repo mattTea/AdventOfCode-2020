@@ -85,4 +85,14 @@ class HomeworkKtTest {
 
         assertThat(result).isEqualTo(13632)
     }
+
+    @Test
+    fun `should calculate result from full input`() {
+        val input = homeworkLines
+
+        val result = runAllHomeworkLines(input)
+        println(result)
+
+        assertThat(result).isEqualTo(15285807527593)
+    }
 }
