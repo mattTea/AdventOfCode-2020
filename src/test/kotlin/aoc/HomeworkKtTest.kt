@@ -95,4 +95,63 @@ class HomeworkKtTest {
 
         assertThat(result).isEqualTo(15285807527593)
     }
+
+    // Part 2
+
+    @Test
+    fun `should return opposite operator precedence for 3 values`() {
+        val input = "1 * 2 + 3"
+
+        val result = oppositeOrder(input)
+
+        assertThat(result).isEqualTo(5)
+    }
+
+    @Test
+    fun `should return opposite operator precedence for 3 values in different order`() {
+        val input = "1 + 2 * 3"
+
+        val result = oppositeOrder(input)
+
+        assertThat(result).isEqualTo(9)
+    }
+
+    @Test
+    fun `should return opposite summation when all values are to be added`() {
+        val input = "1+6+44"
+
+        val result = oppositeOrder(input)
+
+        assertThat(result).isEqualTo(51)
+    }
+
+    @Test
+    fun `should calculate expression with braces based on new precedence`() {
+        val input = "1 + (2 * 3) + (4 * (5 + 6))"
+
+        val result = calculateExpressionWithBracesForPart2(input)
+
+        assertThat(result).isEqualTo(51)
+    }
+
+    @Test
+    fun `should calculate complex expression with braces based on new precedence`() {
+        val input = "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2"
+
+        val result = calculateExpressionWithBracesForPart2(input)
+
+        assertThat(result).isEqualTo(23340)
+    }
+
+    @Test
+    fun `should calculate full input based on new precedence`() {
+        val input = homeworkLines
+
+        val result = runAllHomeworkLinesForPart2(input)
+        println(result)
+
+        assertThat(result).isEqualTo(461295257566346)
+    }
+
+
 }
