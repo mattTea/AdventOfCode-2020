@@ -8,9 +8,11 @@ fun followRule(
         "a" -> "a"
         "b" -> "b"
         else -> {
-            val nextRuleNumber = rule.second.toInt()
-            val nextRule = Rule(nextRuleNumber, rules[nextRuleNumber]!!)
-            followRule(rules, nextRule)
+            val nextRuleNumbers = rule.second.split(" ").map { it.toInt() }
+            nextRuleNumbers.joinToString("") {
+                val nextRule = Rule(it, rules[it]!!)
+                followRule(rules, nextRule)
+            }
         }
     }
 }
